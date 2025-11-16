@@ -183,13 +183,13 @@ const styles = StyleSheet.create({
   },
   headerActions: {
     flexDirection: 'row',
-    gap: 8,
   },
   iconButton: {
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 8,
   },
   iconText: {
     fontSize: 20,
@@ -306,6 +306,5 @@ const styles = StyleSheet.create({
   fabText: {
     fontSize: 32,
     color: '#FFFFFF',
-    fontWeight: '300',
   },
 });

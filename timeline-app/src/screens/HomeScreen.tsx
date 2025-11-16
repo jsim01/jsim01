@@ -1,18 +1,50 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { colors } from '../theme/colors';
 
 export default function HomeScreen() {
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const handleSearch = () => {
+    Alert.alert('Search', 'Search functionality coming soon!');
+  };
+
+  const handleSettings = () => {
+    Alert.alert('Settings', 'Navigate to Settings tab at the bottom');
+  };
+
+  const handlePreviousDay = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() - 1);
+    setCurrentDate(newDate);
+    Alert.alert('Date Changed', `Previous day: ${newDate.toLocaleDateString()}`);
+  };
+
+  const handleNextDay = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() + 1);
+    setCurrentDate(newDate);
+    Alert.alert('Date Changed', `Next day: ${newDate.toLocaleDateString()}`);
+  };
+
+  const handleCreateEvent = () => {
+    Alert.alert(
+      'Create Event',
+      'Event creation screen will open here. For now, this is a placeholder.',
+      [{ text: 'OK' }]
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Timeline</Text>
         <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={handleSearch}>
             <Text style={styles.iconText}>🔍</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={handleSettings}>
             <Text style={styles.iconText}>⚙️</Text>
           </TouchableOpacity>
         </View>
@@ -20,17 +52,17 @@ export default function HomeScreen() {
 
       {/* Date Selector */}
       <View style={styles.dateSelector}>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity style={styles.navButton} onPress={handlePreviousDay}>
           <Text style={styles.navButtonText}>◀</Text>
         </TouchableOpacity>
         <Text style={styles.dateText}>
-          📅 Today - {new Date().toLocaleDateString('en-US', {
+          📅 {currentDate.toDateString() === new Date().toDateString() ? 'Today' : currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {currentDate.toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric'
           })}
         </Text>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity style={styles.navButton} onPress={handleNextDay}>
           <Text style={styles.navButtonText}>▶</Text>
         </TouchableOpacity>
       </View>
@@ -74,7 +106,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       {/* Floating Action Button */}
-      <TouchableOpacity style={styles.fab}>
+      <TouchableOpacity style={styles.fab} onPress={handleCreateEvent}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -91,8 +123,19 @@ interface TimelineItemProps {
 }
 
 function TimelineItem({ time, icon, title, category, location }: TimelineItemProps) {
+  const handlePress = () => {
+    Alert.alert(
+      'Event Details',
+      `Time: ${time}\nTitle: ${title}\nCategory: ${category || 'None'}\nLocation: ${location || 'None'}`,
+      [
+        { text: 'Edit', onPress: () => Alert.alert('Edit', 'Edit screen coming soon!') },
+        { text: 'Close', style: 'cancel' }
+      ]
+    );
+  };
+
   return (
-    <TouchableOpacity style={styles.timelineItem}>
+    <TouchableOpacity style={styles.timelineItem} onPress={handlePress}>
       <View style={styles.timeColumn}>
         <Text style={styles.timeText}>{time}</Text>
       </View>

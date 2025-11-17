@@ -47,7 +47,7 @@ function CategoryBar({ category, count, percentage, color }: CategoryBarProps) {
     <View style={styles.categoryRow}>
       <Text style={styles.categoryLabel}>{category}</Text>
       <View style={styles.barContainer}>
-        <View style={[styles.bar, { width: `${percentage}%`, backgroundColor: color }]} />
+        <View style={[styles.bar, { width: percentage + '%', backgroundColor: color }]} />
       </View>
       <Text style={styles.categoryCount}>{count}</Text>
     </View>
@@ -80,10 +80,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     elevation: 2,
   },
   cardTitle: {
